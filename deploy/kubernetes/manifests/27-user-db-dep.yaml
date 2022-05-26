@@ -31,7 +31,6 @@ spec:
       initContainers:
       - name: init-myservice
         securityContext:
-          fsGroup: 999
           runAsUser: 999
         image: weaveworksdemos/user-db:0.3.0
         command: ["/bin/sh"]
