@@ -39,7 +39,7 @@ spec:
               - all
             add:
               - NET_BIND_SERVICE
-          readOnlyRootFilesystem: true
+          readOnlyRootFilesystem: false
         livenessProbe:
           httpGet:
             path: /health

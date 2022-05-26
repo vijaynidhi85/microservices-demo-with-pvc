@@ -1,4 +1,15 @@
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: catalogue-db-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,5 +38,12 @@ spec:
         ports:
         - name: mysql
           containerPort: 3306
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: catalogue-db-claim
       nodeSelector:
         beta.kubernetes.io/os: linux

@@ -32,6 +32,6 @@ spec:
               - CHOWN
               - SETGID
               - SETUID
-          readOnlyRootFilesystem: true
+          readOnlyRootFilesystem: false
       nodeSelector:
         beta.kubernetes.io/os: linux
