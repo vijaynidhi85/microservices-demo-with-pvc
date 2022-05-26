@@ -10,16 +10,16 @@ https://microservices-demo.github.io/
 and
 
 https://github.com/microservices-demo/microservices-demo
-# Changes Made:
+# Deployment instructions :
 * clone the repo to you local setup where you have kubeconfig configured to your kubernetes cluster
-* cd into deploy/kubernetes directory
-* run following command to deploy
+* cd into deploy/kubernetes/manifests directory
+* run following command to deploy all yamls in the manifests
 ```
-kubectl apply -f ./complete-demo.yaml 
+kubectl apply -f . 
 ```
 
 # Note
-* These changes are made for the kubernetes based deployment to use back-end storage based CSI provisioners
+* These changes are made for the kubernetes based deployment to use back-end storage based CSI provisioners for 3 DB services(carts/catalogue/orders)
 * It uses the default Storage-Class 
 * This is for testing/demo purpose only - made some security context changes to run on openshift
 * Tested on openshift and nutanix karbon k8s
@@ -35,7 +35,7 @@ oc adm policy add-scc-to-user privileged -z default -n sock-shop
   * 03-carts-db-dep.yaml
   * 07-catalogue-db-dep.yaml
   * 13-orders-db-dep.yaml
-  * 27-user-db-dep.yaml
+
 * For each of the above files - added PVC definition and mounted it in the respective db folder
 * Fixed a few security context settings to run on Openshift 
 * Added init script on 27-user-db-dep.yaml to ensure the db is initiated with 3 users 
