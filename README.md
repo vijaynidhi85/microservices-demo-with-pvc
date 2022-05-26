@@ -38,8 +38,6 @@ oc adm policy add-scc-to-user privileged -z default -n sock-shop
 
 * For each of the above files - added PVC definition and mounted it in the respective db folder
 * Fixed a few security context settings to run on Openshift 
-* Added init script on 27-user-db-dep.yaml to ensure the db is initiated with 3 users 
-
 
 
 --------------------
