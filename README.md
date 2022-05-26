@@ -1,4 +1,49 @@
-[![Build Status](https://travis-ci.org/microservices-demo/microservices-demo.svg?branch=master)](https://travis-ci.org/microservices-demo/microservices-demo)
+
+# Sock Shop with Storage Persistence : A Microservice Demo Application
+
+This project is designed to modify the original Sock Shop's microservice application to user Persistant volumes for kubernetes based deployments rather than tmp directories.
+
+Please refer to the original project here:
+
+https://microservices-demo.github.io/
+
+and
+
+https://github.com/microservices-demo/microservices-demo
+# Changes Made:
+* clone the repo to you local setup where you have kubeconfig configured to your kubernetes cluster
+* cd into deploy/kubernetes directory
+* run following command to deploy
+```
+kubectl apply -f ./complete-demo.yaml 
+```
+
+# Note
+* These changes are made for the kubernetes based deployment to use back-end storage based CSI provisioners
+* It uses the default Storage-Class 
+* This is for testing/demo purpose only - made some security context changes to run on openshift
+* Tested on openshift and nutanix karbon k8s
+* for openshift you may need to add the default account of the sock-shop namespace to priviledge security context
+
+```
+oc adm policy add-scc-to-user privileged -z default -n sock-shop
+```
+
+# Changes Made:
+* Modified the following files in the manifests directory:
+
+  * 03-carts-db-dep.yaml
+  * 07-catalogue-db-dep.yaml
+  * 13-orders-db-dep.yaml
+  * 27-user-db-dep.yaml
+* For each of the above files - added PVC definition and mounted it in the respective db folder
+* Fixed a few security context settings to run on Openshift 
+* Added init script on 27-user-db-dep.yaml to ensure the db is initiated with 3 users 
+
+
+
+--------------------
+
 
 # Sock Shop : A Microservice Demo Application
 
