@@ -12,7 +12,7 @@ and
 https://github.com/microservices-demo/microservices-demo
 # Deployment instructions :
 * clone the repo to you local setup where you have kubeconfig configured to your kubernetes cluster
-* cd into deploy/kubernetes/manifests directory
+* cd into **deploy/kubernetes/manifests ** directory
 * run following command to deploy all yamls in the manifests
 ```
 kubectl apply -f . 
@@ -28,7 +28,21 @@ kubectl apply -f .
 ```
 oc adm policy add-scc-to-user privileged -z default -n sock-shop
 ```
+* You might hit docker image pull limits - you could try to authenticate your image pulls by performing the following:
 
+1. docker login ## login to your docker hub account
+2. Create the docker registry pull secret
+
+```
+kubectl create secret generic regcred     --from-file=.dockerconfigjson=~/.docker/config.json     --type=kubernetes.io/dockerconfigjson -n sock-shop
+```
+3. Patch the default serfvice account of the namespace sock-shop
+
+```
+ kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "regcred"}]}'
+ ```
+ 4. Delete the pods with imagepull backoff issues
+ 
 # Changes Made:
 * Modified the following files in the manifests directory:
 
